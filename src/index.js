@@ -1,7 +1,7 @@
-import avatar from '../assets/avatar.png';
 
-var img = new Image();
-img.src = avatar;
-console.log(avatar)
 var root = document.getElementById('root');
-root.appendChild(img);
+
+import './index.scss'
+
+// createAvatar();
+root.innerHTML = '<div class="icon iconfont iconkehuishou-buliaolei"></div>';
