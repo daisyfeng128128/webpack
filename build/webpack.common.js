@@ -5,6 +5,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
+    lodash: './src/lodash.js',
     main: './src/index.js'
   },
   module: {
@@ -46,9 +47,8 @@ module.exports = {
     ]
   },
   output: {
-    publicPath: '/',
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, '../dist')
   },
   plugins: [new HtmlWebpackPlugin({
     template: 'src/index.html'

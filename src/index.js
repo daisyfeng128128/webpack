@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import { add } from './math.js';
 
 add(10, 30)
+console.log(_.join(['a', 'b', 'c']))
 class App extends Component {
   render () {
     return (
