@@ -1,11 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    lodash: './src/lodash.js',
     main: './src/index.js'
   },
   module: {
@@ -49,6 +47,30 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, '../dist')
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      automaticNameMaxLength: 30,
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendors'
+        },
+        default: {
+          priority: -20,
+          reuseExistingChunk: true,
+          name: 'common'
+        }
+      }
+    },
   },
   plugins: [new HtmlWebpackPlugin({
     template: 'src/index.html'
