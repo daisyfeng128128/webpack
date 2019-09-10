@@ -49,6 +49,7 @@
     "@babel/runtime": "^7.5.5",
     "@babel/runtime-corejs2": "^7.5.5",
     "core-js": "^2.6.9",
+    "jquery": "^3.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "webpack": "^4.25.1",

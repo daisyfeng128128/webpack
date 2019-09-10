@@ -37,7 +37,11 @@ const devConfig = {
   //简写-> entry: 'src/index.js',
   plugins: [
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  output: {
+    filename: '[name].css',
+    chunkFilename: '[name].css',
+  }
 };
 
 module.exports = merge(commonConfig, devConfig);

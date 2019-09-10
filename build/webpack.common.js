@@ -14,8 +14,7 @@ function recursiveIssuer (m) {
 
 module.exports = {
   entry: {
-    main: './src/index.js',
-    main1: './src/index2.js',
+    main: './src/index.js'
   },
   module: {
     rules: [
@@ -51,38 +50,38 @@ module.exports = {
     usedExports: true,
     splitChunks: {
       chunks: 'all',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      automaticNameMaxLength: 30,
-      name: true,
+      // minSize: 30000,
+      // minChunks: 1,
+      // maxAsyncRequests: 5,
+      // maxInitialRequests: 3,
+      // automaticNameDelimiter: '~',
+      // automaticNameMaxLength: 30,
+      // name: true,
       cacheGroups: {
-        fooStyles: {
-          name: 'main',
-          test: (m, c, entry = 'main') =>
-            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-          chunks: 'all',
-          enforce: true,
-        },
-        barStyles: {
-          name: 'main1',
-          test: (m, c, entry = 'main2') =>
-            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-          chunks: 'all',
-          enforce: true,
-        },
+        // fooStyles: {
+        //   name: 'main',
+        //   test: (m, c, entry = 'main') =>
+        //     m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+        //   chunks: 'all',
+        //   enforce: true,
+        // },
+        // barStyles: {
+        //   name: 'main1',
+        //   test: (m, c, entry = 'main2') =>
+        //     m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+        //   chunks: 'all',
+        //   enforce: true,
+        // },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           name: 'vendors'
         },
-        default: {
-          priority: -20,
-          reuseExistingChunk: true,
-          name: 'common'
-        }
+        // default: {
+        //   priority: -20,
+        //   reuseExistingChunk: true,
+        //   name: 'common'
+        // }
       }
     },
   },
