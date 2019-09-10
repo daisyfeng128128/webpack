@@ -2,9 +2,20 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+function recursiveIssuer (m) {
+  if (m.issuer) {
+    return recursiveIssuer(m.issuer);
+  } else if (m.name) {
+    return m.name;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: './src/index.js',
+    main1: './src/index2.js',
   },
   module: {
     rules: [
@@ -28,27 +39,16 @@ module.exports = {
         use: {
           loader: 'file-loader',
         }
-      },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 2
-          }
-        }, 'sass-loader', 'postcss-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
       }
     ]
   },
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     path: path.resolve(__dirname, '../dist')
   },
   optimization: {
+    usedExports: true,
     splitChunks: {
       chunks: 'all',
       minSize: 30000,
@@ -59,6 +59,20 @@ module.exports = {
       automaticNameMaxLength: 30,
       name: true,
       cacheGroups: {
+        fooStyles: {
+          name: 'main',
+          test: (m, c, entry = 'main') =>
+            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+          chunks: 'all',
+          enforce: true,
+        },
+        barStyles: {
+          name: 'main1',
+          test: (m, c, entry = 'main2') =>
+            m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+          chunks: 'all',
+          enforce: true,
+        },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,

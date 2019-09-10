@@ -16,10 +16,25 @@ const devConfig = {
     hot: true,
     // hotOnly: true
   },
-  //简写-> entry: 'src/index.js',
-  optimization: {
-    usedExports: true
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 2,
+            modules: true
+          }
+        }, 'sass-loader', 'postcss-loader']
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader']
+      }
+    ]
   },
+  //简写-> entry: 'src/index.js',
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ]
