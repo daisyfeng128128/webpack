@@ -5,10 +5,6 @@ const commonConfig = require('./webpack.common.js');
 const devConfig = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
-  entry: {
-    main: './src/index.js',
-    // sub: './src/index.js'
-  },
   devServer: {
     contentBase: './dist',
     open: true,
@@ -39,8 +35,8 @@ const devConfig = {
     new webpack.HotModuleReplacementPlugin()
   ],
   output: {
-    filename: '[name].css',
-    chunkFilename: '[name].css',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
   }
 };
 

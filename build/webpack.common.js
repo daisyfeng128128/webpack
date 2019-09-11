@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 function recursiveIssuer (m) {
   if (m.issuer) {
@@ -21,7 +22,10 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        use: [
+          { loader: "babel-loader" },
+          { loader: "imports-loader?this=>window" }
+        ]
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -30,7 +34,7 @@ module.exports = {
           options: {
             name: '[name]_[hash].[ext]',
             outputPath: 'assets/',
-            limit: 20480
+            limit: 10240
           }
         }
       }, {
@@ -41,12 +45,11 @@ module.exports = {
       }
     ]
   },
-  output: {
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
-    path: path.resolve(__dirname, '../dist')
-  },
   optimization: {
+    // 低版本webpack在文件没有修改情况下打包hash值更改兼容成不改文件hash不动
+    runtimeChunk: {
+      name: 'runtime'
+    },
     usedExports: true,
     splitChunks: {
       chunks: 'all',
@@ -87,6 +90,16 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin({
     template: 'src/index.html'
-  }), new CleanWebpackPlugin()
-  ]
+  }), new CleanWebpackPlugin(),
+  // 垫片
+  new webpack.ProvidePlugin({
+    $: 'jquery'
+  })
+  ],
+  performance: false,
+  output: {
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    path: path.resolve(__dirname, '../dist')
+  }
 };
