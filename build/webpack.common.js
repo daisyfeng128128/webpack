@@ -2,6 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
+const devConfig = require('./webpack.dev.js');
+const prodConfig = require('./webpack.prod.js');
 
 function recursiveIssuer (m) {
   if (m.issuer) {
@@ -13,7 +16,7 @@ function recursiveIssuer (m) {
   }
 }
 
-module.exports = {
+const commonConfig = {
   entry: {
     main: './src/index.js'
   },
@@ -103,3 +106,11 @@ module.exports = {
     path: path.resolve(__dirname, '../dist')
   }
 };
+
+module.exports = (env) => {
+  if (env && env.production) {
+    return merge(commonConfig, prodConfig);
+  } else {
+    return merge(commonConfig, devConfig);
+  }
+}
