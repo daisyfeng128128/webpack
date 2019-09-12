@@ -37,3 +37,5 @@ const devConfig = {
     chunkFilename: '[name].js',
   }
 };
+
+module.exports = devConfig;

@@ -41,3 +41,5 @@ const prodConfig = {
     chunkFilename: '[name].[contenthash].js',
   }
 };
+
+module.exports = prodConfig;
