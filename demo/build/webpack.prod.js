@@ -2,6 +2,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const WorkboxPlugin = require('workbox-webpack-plugin') // PWA 插件
+
 const prodConfig = {
   mode: 'production',
   // devtool: 'cheap-module-source-map',
@@ -30,11 +32,17 @@ const prodConfig = {
     ]
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({}),
+    ],
   },
   plugins: [new MiniCssExtractPlugin({
     filename: '[name].css',
     chunkFilename: '[name].chunk.css',
+  }),
+  // 配置 PWA
+  new WorkboxPlugin.GenerateSW({
+    clientsClaim: true,
+    skipWaiting: true
   })],
   output: {
     filename: '[name].[contenthash].js',
